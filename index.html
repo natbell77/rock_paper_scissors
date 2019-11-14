@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock, Paper, Scissors</title>
+        <script>
+
+            let choiceArray = ["Rock","Paper","Scissors"];
+            let computerScore = 0;
+            let userScore = 0;
+            let gameCount = 0;
+
+            function showChoice(e) {
+                console.log(e.target.value);
+            }
+
+            function computerPlay() {
+                let i = Math.floor(Math.random()*choiceArray.length);
+                return choiceArray[i].toLowerCase();
+            }
+
+            function processRoundResults(winner) {
+                switch (winner) {
+                    case "tie":
+                    console.log(`Game ${ gameCount }: A TIE! Computer(${ computerScore }): ${ computerChoice }   Player(${ userScore }): ${ userChoice }`);
+                    break;
+                    
+                    case "user":
+                    userScore ++
+                    userScoreDisplay.textContent = userScore;
+                    console.log(`Game ${ gameCount }: PLAYER wins! Computer(${ computerScore }): ${ computerChoice }   Player(${ userScore }): ${ userChoice }`);
+                    break;
+
+                    case "computer":
+                    computerScore ++
+                    computerScoreDisplay.textContent = computerScore;
+                    console.log(`Game ${ gameCount }: COMPUTER wins! Computer(${ computerScore }): ${ computerChoice }   Player(${ userScore }): ${ userChoice }`);
+                    break;
+                }
+            }
+
+            function playRound(e) {
+                userChoice = e.target.value;
+                computerChoice = computerPlay();
+                if (computerChoice === userChoice) {
+                    processRoundResults("tie");
+                } else if (computerChoice == 'rock') {
+                    if (userChoice == 'paper') {
+                       processRoundResults("user"); 
+                    } else {
+                        processRoundResults("computer");
+                    }
+                } else if (computerChoice == 'paper') {
+                    if (userChoice == 'scissors') {
+                       processRoundResults("user"); 
+                    } else {
+                        processRoundResults("computer");
+                    }
+                } else {
+                    if (userChoice == 'rock') {
+                       processRoundResults("user"); 
+                    } else {
+                        processRoundResults("computer");
+                    }
+                }
+                gameCount ++;
+                gameCountDisplay.textContent = gameCount;
+            }
+
+            //playRound();
+
+
+        </script>
+    </head>
+    <body>
+        <button class="choiceButton" id="rock-btn" value="rock">Rock</button>
+        <button class="choiceButton" id="paper-btn" value="paper">Paper</button>
+        <button class="choiceButton" id="scissors-btn" value="scissors">Scissors</button>
+        <script>
+            const resultsWindow = document.createElement('div');
+
+            const userScoreHeading = document.createElement('h3');
+            userScoreHeading.classList.add('output-heading');
+            userScoreHeading.textContent = "PLAYER";
+
+            const computerScoreHeading = document.createElement('h3');
+            computerScoreHeading.classList.add('output-heading');
+            computerScoreHeading.textContent = "COMPUTER";
+
+            const gameCountHeading = document.createElement('h3');
+            gameCountHeading.classList.add('output-heading');
+            gameCountHeading.textContent = "GAMES PLAYED";
+
+            const userScoreDisplay = document.createElement('span');
+            userScoreDisplay.textContent = userScore;
+
+            const computerScoreDisplay = document.createElement('span');
+            computerScoreDisplay.textContent = computerScore;
+
+            const gameCountDisplay = document.createElement('span');
+            gameCountDisplay.textContent = gameCount;
+
+            const computerScoreWindow = document.createElement('div');
+            computerScoreWindow.appendChild(computerScoreHeading);
+            computerScoreWindow.appendChild(computerScoreDisplay);
+
+            const userScoreWindow = document.createElement('div');
+            userScoreWindow.appendChild(userScoreHeading);
+            userScoreWindow.appendChild(userScoreDisplay);
+
+            const gameCountWindow = document.createElement('div');
+            gameCountWindow.appendChild(gameCountHeading);
+            gameCountWindow.appendChild(gameCountDisplay);
+
+            const choiceButtons = document.querySelectorAll('.choiceButton');
+
+            choiceButtons.forEach((button) => {
+                button.addEventListener('click', playRound);
+            });
+
+            resultsWindow.classList.add('results-window');
+            resultsWindow.textContent = "This is the results window";
+
+            computerScoreWindow.classList.add('score-window');
+            userScoreWindow.classList.add('score-window');
+            gameCountWindow.classList.add('score-window');
+
+            resultsWindow.appendChild(computerScoreWindow);
+            resultsWindow.appendChild(userScoreWindow);
+            resultsWindow.appendChild(gameCountWindow);
+
+            document.body.append(resultsWindow);
+
+
+        </script>
+    </body>
+</html>

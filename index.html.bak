@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Rock, Paper, Scissors</title>
+        <script>
+            let choiceArray = ["Rock","Paper","Scissors"];
+            let computerScore = 0;
+            let userScore = 0;
+            let gameCount = 0;
+
+            function game(){
+                gameCount ++;
+                playRound();
+                if (gameCount < 5) {
+                    game();
+                } else {
+                    if (userScore > computerScore) {
+                        console.log(`PLAYER wins!! (${ userScore } - ${ computerScore })`)
+                    } else {
+                        console.log(`COMPUTER wins!! (${ computerScore } - ${ userScore })`)
+                    }
+                }
+            }
+
+            function computerPlay() {
+                let i = Math.floor(Math.random()*choiceArray.length);
+                return choiceArray[i].toLowerCase();
+            }
+
+            function processRoundResults(winner) {
+                switch (winner) {
+                    case "tie":
+                    console.log(`A TIE! Computer(${ computerScore }): ${ computerChoice }   Player(${ userScore }): ${ userChoice }`);
+                    break;
+                    
+                    case "user":
+                    userScore ++
+                    console.log(`PLAYER wins! Computer(${ computerScore }): ${ computerChoice }   Player(${ userScore }): ${ userChoice }`);
+                    break;
+
+                    case "computer":
+                    computerScore ++
+                    console.log(`COMPUTER wins! Computer(${ computerScore }): ${ computerChoice }   Player(${ userScore }): ${ userChoice }`);
+                    break;
+                }
+            }
+
+            function playRound() {
+                computerChoice = computerPlay();
+                userChoice = prompt('Enter \'Rock\', \'Paper\', or \'Scissors\': ').toLowerCase();
+                if (computerChoice === userChoice) {
+                    processRoundResults("tie");
+                } else if (computerChoice == 'rock') {
+                    if (userChoice == 'paper') {
+                       processRoundResults("user"); 
+                    } else {
+                        processRoundResults("computer");
+                    }
+                } else if (computerChoice == 'paper') {
+                    if (userChoice == 'scissors') {
+                       processRoundResults("user"); 
+                    } else {
+                        processRoundResults("computer");
+                    }
+                } else {
+                    if (userChoice == 'rock') {
+                       processRoundResults("user"); 
+                    } else {
+                        processRoundResults("computer");
+                    }
+                }
+            }
+
+            //playRound();
+            game();
+
+            
+            
+            
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
