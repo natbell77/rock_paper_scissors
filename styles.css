@@ -1,0 +1,37 @@
+.output-heading {
+    font-size: 10px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.output-text {
+    font-size: 60px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.score-window {
+    color: black;
+}
+
+.results-window {
+    font-size: 20px;
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    color: maroon;
+    text-align: center;
+    width: 100%;
+}
+
+.results-text-window {
+    grid-column-start: 1;
+    grid-column-end: 4;
+    color: green;
+}
+
+.button-window {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}

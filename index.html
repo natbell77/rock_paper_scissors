@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>Rock, Paper, Scissors</title>
+        <link rel="stylesheet" type="text/css" href="styles.css">
         <script>
 
             let choiceArray = ["Rock","Paper","Scissors"];
@@ -21,17 +22,20 @@
             function processRoundResults(winner) {
                 switch (winner) {
                     case "tie":
+                    resultsDisplay.textContent = "A TIE!";
                     console.log(`Game ${ gameCount }: A TIE! Computer(${ computerScore }): ${ computerChoice }   Player(${ userScore }): ${ userChoice }`);
                     break;
                     
                     case "user":
                     userScore ++
+                    resultsDisplay.textContent = "PLAYER WINS!";
                     userScoreDisplay.textContent = userScore;
                     console.log(`Game ${ gameCount }: PLAYER wins! Computer(${ computerScore }): ${ computerChoice }   Player(${ userScore }): ${ userChoice }`);
                     break;
 
                     case "computer":
                     computerScore ++
+                    resultsDisplay.textContent = "COMPUTER WINS!";
                     computerScoreDisplay.textContent = computerScore;
                     console.log(`Game ${ gameCount }: COMPUTER wins! Computer(${ computerScore }): ${ computerChoice }   Player(${ userScore }): ${ userChoice }`);
                     break;
@@ -44,23 +48,11 @@
                 if (computerChoice === userChoice) {
                     processRoundResults("tie");
                 } else if (computerChoice == 'rock') {
-                    if (userChoice == 'paper') {
-                       processRoundResults("user"); 
-                    } else {
-                        processRoundResults("computer");
-                    }
+                    processRoundResults((userChoice == 'paper') ? "user" : "computer");
                 } else if (computerChoice == 'paper') {
-                    if (userChoice == 'scissors') {
-                       processRoundResults("user"); 
-                    } else {
-                        processRoundResults("computer");
-                    }
+                    processRoundResults((userChoice == 'scissors') ? "user" : "computer");
                 } else {
-                    if (userChoice == 'rock') {
-                       processRoundResults("user"); 
-                    } else {
-                        processRoundResults("computer");
-                    }
+                    processRoundResults((userChoice == 'rock') ? "user" : "computer");
                 }
                 gameCount ++;
                 gameCountDisplay.textContent = gameCount;
@@ -72,11 +64,21 @@
         </script>
     </head>
     <body>
-        <button class="choiceButton" id="rock-btn" value="rock">Rock</button>
-        <button class="choiceButton" id="paper-btn" value="paper">Paper</button>
-        <button class="choiceButton" id="scissors-btn" value="scissors">Scissors</button>
         <script>
+
             const resultsWindow = document.createElement('div');
+            resultsWindow.classList.add('results-window');
+
+            const resultsTextWindow = document.createElement('div');
+            resultsTextWindow.classList.add('results-text-window');
+
+            const buttonWindow = document.createElement('div');
+            buttonWindow.classList.add('button-window');
+            
+            const resultsDisplay = document.createElement('span');
+            resultsDisplay.classList.add('results-display');
+            resultsDisplay.textContent = "Let's Play!";
+            resultsTextWindow.appendChild(resultsDisplay);
 
             const userScoreHeading = document.createElement('h3');
             userScoreHeading.classList.add('output-heading');
@@ -91,12 +93,15 @@
             gameCountHeading.textContent = "GAMES PLAYED";
 
             const userScoreDisplay = document.createElement('span');
+            userScoreDisplay.classList.add('output-text');
             userScoreDisplay.textContent = userScore;
 
             const computerScoreDisplay = document.createElement('span');
+            computerScoreDisplay.classList.add('output-text');
             computerScoreDisplay.textContent = computerScore;
 
             const gameCountDisplay = document.createElement('span');
+            gameCountDisplay.classList.add('output-text');
             gameCountDisplay.textContent = gameCount;
 
             const computerScoreWindow = document.createElement('div');
@@ -111,24 +116,50 @@
             gameCountWindow.appendChild(gameCountHeading);
             gameCountWindow.appendChild(gameCountDisplay);
 
-            const choiceButtons = document.querySelectorAll('.choiceButton');
+            //Button Groups
+            const buttonRock = document.createElement('button');
+            buttonRock.classList.add('choice-button');
+            buttonRock.value = 'rock';
+            buttonRock.textContent = 'Rock';
+            buttonRock.id = 'btn-rock';
 
-            choiceButtons.forEach((button) => {
-                button.addEventListener('click', playRound);
-            });
+            const buttonPaper = document.createElement('button');
+            buttonPaper.classList.add('choice-button');
+            buttonPaper.value = 'paper';
+            buttonPaper.textContent = 'Paper';
+            buttonPaper.id = 'btn-paper';
 
-            resultsWindow.classList.add('results-window');
-            resultsWindow.textContent = "This is the results window";
+            const buttonScissors = document.createElement('button');
+            buttonScissors.classList.add('choice-button');
+            buttonScissors.value = 'scissors';
+            buttonScissors.textContent = 'Scissors';
+            buttonScissors.id = 'btn-scissors';
+
+            const buttonReset = document.createElement('button');
+            buttonScissors.classList.add('choice-button');
+            buttonScissors.value = 'reset';
+            buttonScissors.textContent = 'Play Again';
+            buttonScissors.id = 'btn-reset'; 
 
             computerScoreWindow.classList.add('score-window');
             userScoreWindow.classList.add('score-window');
             gameCountWindow.classList.add('score-window');
 
+            resultsWindow.appendChild(resultsTextWindow); 
             resultsWindow.appendChild(computerScoreWindow);
             resultsWindow.appendChild(userScoreWindow);
             resultsWindow.appendChild(gameCountWindow);
+            buttonWindow.appendChild(buttonRock);
+            buttonWindow.appendChild(buttonPaper);
+            buttonWindow.appendChild(buttonScissors);
+            resultsWindow.appendChild(buttonWindow);
 
             document.body.append(resultsWindow);
+
+            const choiceButtons = document.querySelectorAll('.choice-button');
+            choiceButtons.forEach((button) => {
+                button.addEventListener('click', playRound);
+            });
 
 
         </script>
